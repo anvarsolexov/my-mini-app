@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xizmatlar Do'koni</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            margin: 0;
+            padding: 15px;
+            text-align: center;
+        }
+        h2 { margin-bottom: 20px; color: #38bdf8; }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            color: #94a3b8;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #1e293b;
+            color: white;
+            border: 1px solid #334155;
+            padding: 12px 8px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:active {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🛍️ Xizmatni tanlang</h2>
+
+    <div class="section-title">⭐ Telegram Stars</div>
+    <div class="grid">
+        <button onclick="selectItem('50 Stars - 11,000 so\'m')">50 ⭐ (11,000 so'm)</button>
+        <button onclick="selectItem('70 Stars - 15,400 so\'m')">70 ⭐ (15,400 so'm)</button>
+        <button onclick="selectItem('100 Stars - 22,000 so\'m')">100 ⭐ (22,000 so'm)</button>
+        <button onclick="selectItem('150 Stars - 33,000 so\'m')">150 ⭐ (33,000 so'm)</button>
+        <button onclick="selectItem('200 Stars - 44,000 so\'m')">200 ⭐ (44,000 so'm)</button>
+        <button onclick="selectItem('250 Stars - 55,000 so\'m')">250 ⭐ (55,000 so'm)</button>
+        <button onclick="selectItem('500 Stars - 110,000 so\'m')">500 ⭐ (110,000 so'm)</button>
+        <button onclick="selectItem('1000 Stars - 220,000 so\'m')">1000 ⭐ (220,000 so'm)</button>
+    </div>
+
+    <div class="section-title">💎 Telegram Premium</div>
+    <div class="grid">
+        <button class="full-width" onclick="selectItem('1 oy Premium - 49,900 so\'m')">1 oy (admin orqali) - 49,900 so'm</button>
+        <button class="full-width" onclick="selectItem('3 oy Premium - 180,000 so\'m')">3 oy - 180,000 so'm</button>
+        <button class="full-width" onclick="selectItem('6 oy Premium - 250,000 so\'m')">6 oy - 250,000 so'm</button>
+        <button class="full-width" onclick="selectItem('12 oy Premium - 400,000 so\'m')">12 oy - 400,000 so'm</button>
+    </div>
+
+    <div class="section-title">🎁 Telegram Gift</div>
+    <div class="grid">
+        <button onclick="selectItem('Gift 1 - 4,095 so\'m')">🎁 4,095 so'm</button>
+        <button onclick="selectItem('Gift 2 - 6,825 so\'m')">🎁 6,825 so'm</button>
+        <button onclick="selectItem('Gift 3 - 13,650 so\'m')">🎁 13,650 so'm</button>
+        <button onclick="selectItem('Gift 4 - 27,300 so\'m')">🎁 27,300 so'm</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function selectItem(itemText) {
+            tg.sendData(itemText);
+        }
+    </script>
+</body>
+</html>
