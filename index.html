@@ -62,11 +62,9 @@
             cursor: pointer;
         }
         
-        /* Screens */
         .screen { display: none; }
         .screen.active { display: block; }
 
-        /* Main Menu Cards */
         .menu-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -81,19 +79,14 @@
         }
         .menu-card:active { transform: scale(0.98); }
         .menu-info { display: flex; align-items: center; gap: 14px; text-align: left; }
-        .menu-icon { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; background: #262c38; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .menu-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #262c38; }
         .menu-title { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
         .menu-desc { font-size: 13px; color: var(--text-secondary); }
 
-        /* Subpages Header */
-        .sub-header {
-            text-align: left;
-            margin-bottom: 15px;
-        }
+        .sub-header { text-align: left; margin-bottom: 15px; }
         .sub-title { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
         .sub-desc { font-size: 13px; color: var(--text-secondary); }
 
-        /* Form elements */
         .input-group {
             display: flex;
             justify-content: space-between;
@@ -126,7 +119,6 @@
             cursor: pointer;
         }
 
-        /* Items Grid / List */
         .item-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -140,10 +132,46 @@
             transition: 0.2s;
         }
         .item-card:hover { border-color: var(--accent-color); }
-        .item-name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .item-name { font-weight: 600; font-size: 15px; }
         .item-price { color: var(--accent-color); font-weight: 600; font-size: 14px; }
 
-        /* Bottom Nav Bar */
+        /* Modal To'lov Oynasi (Ilovadan chiqmasdan ko'rinadi) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background: #181c24;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #10b981; }
+        .modal-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; text-align: left; background: #13161c; padding: 12px; border-radius: 10px; }
+        .card-number { font-size: 16px; font-weight: bold; color: #2ea6ff; letter-spacing: 1px; }
+        .close-modal {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
         .nav-bar {
             position: fixed;
             bottom: 10px;
@@ -156,7 +184,6 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            backdrop-filter: blur(10px);
         }
         .nav-item {
             background: none;
@@ -170,38 +197,23 @@
             cursor: pointer;
             padding: 6px 16px;
             border-radius: 20px;
-            transition: 0.2s;
         }
-        .nav-item.active {
-            background: var(--card-border);
-            color: white;
-        }
+        .nav-item.active { background: var(--card-border); color: white; }
         .nav-icon { font-size: 18px; }
-
-        /* History empty state */
-        .empty-box {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 30px;
-        }
+        .empty-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 40px 20px; text-align: center; color: var(--text-secondary); margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <!-- TOP HEADER -->
     <div class="header">
         <div class="user-pill">
             <div class="user-avatar" id="user-initial">A</div>
             <span id="user-name">Anvar</span>
         </div>
-        <button class="topup-btn" onclick="alert('Hisobni to\'ldirish uchun botga yozing')">Hisobni to'ldirish</button>
+        <button class="topup-btn" onclick="openPayment('Hisobni to\'ldirish', 'Iltimos, admin bilan bog\'laning.')">Hisobni to'ldirish</button>
     </div>
 
-    <!-- 1. ASOSIY SAHIFA -->
+    <!-- ASOSIY SAHIFA -->
     <div id="screen-home" class="screen active">
         <div class="menu-card" onclick="switchScreen('screen-stars')">
             <div class="menu-info">
@@ -240,136 +252,86 @@
         <div class="empty-box">Buyurtmalar yo'q</div>
     </div>
 
-    <!-- 2. STARS SAHifASI -->
+    <!-- STARS SAHIFA -->
     <div id="screen-stars" class="screen">
         <div class="sub-header">
             <div style="cursor: pointer; color: var(--accent-color); margin-bottom: 10px; font-size: 14px;" onclick="switchScreen('screen-home')">← Orqaga</div>
-            <div class="sub-desc">O'zingiz yoki yaqinlaringiz uchun Stars balansini to'ldiring — qulay to'lov usullari bilan.</div>
-        </div>
-
-        <div class="input-group">
-            <span style="font-size: 14px; font-weight: 600;">Kimga?</span>
-            <button class="self-btn" onclick="setSelfUser()">O'zimga</button>
+            <div class="sub-desc">O'zingiz yoki yaqinlaringiz uchun Stars balansini to'ldiring.</div>
         </div>
         <input type="text" id="stars-target" class="target-input" placeholder="@username kiriting...">
-
-        <div style="text-align: left; font-weight: bold; margin-bottom: 10px; font-size: 14px;">To'plamni tanlang</div>
-
-        <div class="item-card" onclick="selectProduct('50 Stars', '11,000 so\'m')">
+        
+        <div class="item-card" onclick="openPayment('50 Stars', '11,000 so\'m')">
             <div class="item-name">⭐️ 50 Stars</div>
             <div class="item-price">11,000 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('69 Stars', '15,456 so\'m')">
-            <div class="item-name">⭐️ 69 Stars</div>
-            <div class="item-price">15,456 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('100 Stars', '22,400 so\'m')">
+        <div class="item-card" onclick="openPayment('100 Stars', '22,400 so\'m')">
             <div class="item-name">⭐️ 100 Stars</div>
             <div class="item-price">22,400 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('150 Stars', '33,600 so\'m')">
-            <div class="item-name">⭐️ 150 Stars</div>
-            <div class="item-price">33,600 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('250 Stars', '56,000 so\'m')">
-            <div class="item-name">⭐️ 250 Stars</div>
-            <div class="item-price">56,000 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('350 Stars', '78,400 so\'m')">
-            <div class="item-name">⭐️ 350 Stars</div>
-            <div class="item-price">78,400 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('500 Stars', '112,000 so\'m')">
+        <div class="item-card" onclick="openPayment('500 Stars', '112,000 so\'m')">
             <div class="item-name">⭐️ 500 Stars</div>
             <div class="item-price">112,000 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('750 Stars', '168,000 so\'m')">
-            <div class="item-name">⭐️ 750 Stars</div>
-            <div class="item-price">168,000 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('1K Stars', '224,000 so\'m')">
-            <div class="item-name">⭐️ 1K Stars</div>
-            <div class="item-price">224,000 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('2K Stars', '336,000 so\'m')">
-            <div class="item-name">⭐️ 2K Stars</div>
-            <div class="item-price">336,000 so'm</div>
-        </div>
     </div>
 
-    <!-- 3. PREMIUM SAHIFA -->
+    <!-- PREMIUM SAHIFA -->
     <div id="screen-premium" class="screen">
         <div class="sub-header">
             <div style="cursor: pointer; color: var(--accent-color); margin-bottom: 10px; font-size: 14px;" onclick="switchScreen('screen-home')">← Orqaga</div>
             <div class="sub-title">Telegram Premium olish 💎</div>
-            <div class="sub-desc">O'zingiz yoki yaqinlaringiz uchun Premium — qulay to'lov usullari bilan.</div>
-        </div>
-
-        <div class="input-group">
-            <span style="font-size: 14px; font-weight: 600;">Kimga?</span>
-            <button class="self-btn" onclick="setSelfUserPremium()">O'zimga</button>
         </div>
         <input type="text" id="premium-target" class="target-input" placeholder="@username kiriting...">
 
-        <div style="text-align: left; font-weight: bold; margin-bottom: 10px; font-size: 14px;">Muddatni tanlang</div>
-
-        <div class="item-card" onclick="selectProduct('Telegram Premium (1 oy)', '49,900 so\'m')">
+        <div class="item-card" onclick="openPayment('Telegram Premium (1 oy)', '49,900 so\'m')">
             <div class="item-name">1 oy</div>
             <div class="item-price">49,900 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('Telegram Premium (3 oy)', '180,000 so\'m')">
+        <div class="item-card" onclick="openPayment('Telegram Premium (3 oy)', '180,000 so\'m')">
             <div class="item-name">3 oy</div>
             <div class="item-price">180,000 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('Telegram Premium (6 oy)', '250,000 so\'m')">
-            <div class="item-name">6 oy</div>
-            <div class="item-price">250,000 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('Telegram Premium (1 yil)', '400,000 so\'m')">
-            <div class="item-name">1 yil</div>
-            <div class="item-price">400,000 so'm</div>
-        </div>
     </div>
 
-    <!-- 4. GIFTS SAHIFA -->
+    <!-- GIFTS SAHIFA -->
     <div id="screen-gifts" class="screen">
         <div class="sub-header">
             <div style="cursor: pointer; color: var(--accent-color); margin-bottom: 10px; font-size: 14px;" onclick="switchScreen('screen-home')">← Orqaga</div>
             <div class="sub-title">Telegram Gifts 🎁</div>
-            <div class="sub-desc">Chiroyli sovg'alarni tanlang va xarid qiling.</div>
         </div>
-
-        <div class="item-card" onclick="selectProduct('Telegram Gift №1', '15,000 so\'m')">
+        <div class="item-card" onclick="openPayment('Telegram Gift №1', '15,000 so\'m')">
             <div class="item-name">🎁 Sovg'a №1</div>
             <div class="item-price">15,000 so'm</div>
         </div>
-        <div class="item-card" onclick="selectProduct('Telegram Gift №2', '35,000 so\'m')">
-            <div class="item-name">🎁 Sovg'a №2</div>
-            <div class="item-price">35,000 so'm</div>
-        </div>
-        <div class="item-card" onclick="selectProduct('Telegram Gift №3', '55,000 so\'m')">
-            <div class="item-name">🎁 Sovg'a №3</div>
-            <div class="item-price">55,000 so'm</div>
-        </div>
     </div>
 
-    <!-- 5. TARIX SAHIFA -->
+    <!-- TARIX SAHIFA -->
     <div id="screen-history" class="screen">
-        <div class="sub-header">
-            <div class="sub-title">Buyurtmalar tarixi</div>
-        </div>
+        <div class="sub-header"><div class="sub-title">Buyurtmalar tarixi</div></div>
         <div class="empty-box">Buyurtmalar topilmadi</div>
+    </div>
+
+    <!-- TO'LOV MODAL OYNASI (Ilovadan chiqmasdan chiqadi) -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">✅ Buyurtma qabul qilindi!</div>
+            <div class="modal-text" id="modal-text">
+                <b>Mahsulot:</b> <span id="m-product"></span><br>
+                <b>Narxi:</b> <span id="m-price"></span><br><br>
+                💳 <b>Karta:</b><br><span class="card-number">9860160652729965</span><br>
+                👤 <b>Egasi:</b> Anvar Solexov<br><br>
+                ⚠️ Summani o'tkazib, chekni adminga yuboring!
+            </div>
+            <button class="close-modal" onclick="closePayment()">Tushunarli</button>
+        </div>
     </div>
 
     <!-- BOTTOM NAVIGATION -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchScreen('screen-home', this)">
-            <span class="nav-icon">⭐️</span>
-            <span>Asosiy</span>
+            <span class="nav-icon">⭐️</span><span>Asosiy</span>
         </button>
         <button class="nav-item" onclick="switchScreen('screen-history', this)">
-            <span class="nav-icon">🕒</span>
-            <span>Tarix</span>
+            <span class="nav-icon">🕒</span><span>Tarix</span>
         </button>
     </div>
 
@@ -377,17 +339,15 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Foydalanuvchi nomini chiqarish
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
-            document.getElementById('user-name').innerText = user.first_name || "Foydalanuvchi";
+            document.getElementById('user-name').innerText = user.first_name || "Anvar";
             document.getElementById('user-initial').innerText = (user.first_name ? user.first_name[0] : "A").toUpperCase();
         }
 
         function switchScreen(screenId, btnElement) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
-
             if (btnElement) {
                 document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 btnElement.classList.add('active');
@@ -395,25 +355,15 @@
             window.scrollTo(0, 0);
         }
 
-        function setSelfUser() {
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                document.getElementById('stars-target').value = "@" + (tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name);
-            } else {
-                document.getElementById('stars-target').value = "O'zimga (@my_account)";
-            }
+        // Ilovadan chiqmasdan to'lov oynasini ochish
+        function openPayment(product, price) {
+            document.getElementById('m-product').innerText = product;
+            document.getElementById('m-price').innerText = price;
+            document.getElementById('paymentModal').style.display = 'flex';
         }
 
-        function setSelfUserPremium() {
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                document.getElementById('premium-target').value = "@" + (tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name);
-            } else {
-                document.getElementById('premium-target').value = "O'zimga (@my_account)";
-            }
-        }
-
-        function selectProduct(productName, price) {
-            let fullData = `${productName} - ${price}`;
-            tg.sendData(fullData);
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
         }
     </script>
 </body>
