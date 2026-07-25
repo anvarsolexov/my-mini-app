@@ -87,16 +87,35 @@
         .sub-title { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
         .sub-desc { font-size: 13px; color: var(--text-secondary); }
 
-        .target-input {
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: var(--input-bg);
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            padding: 12px;
+            padding: 4px 10px;
+            margin-bottom: 15px;
+        }
+        .target-input {
+            background: transparent;
+            border: none;
             color: white;
             width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 15px;
+            outline: none;
             font-size: 14px;
+            padding: 8px;
+        }
+        .self-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
         .grid-container {
@@ -195,7 +214,7 @@
             <div class="user-avatar" id="user-initial">A</div>
             <span id="user-name">Anvar</span>
         </div>
-        <button class="topup-btn" onclick="openPayment('Hisobni to\'ldirish', 'Iltimos, admin bilan bog\'laning.')">Hisobni to'ldirish</button>
+        <button class="topup-btn" onclick="openPayment('Hisobni to\'ldirish', 'Hisob to\'ldirish')">Hisobni to'ldirish</button>
     </div>
 
     <!-- ASOSIY SAHIFA -->
@@ -243,7 +262,11 @@
             <div style="cursor: pointer; color: var(--accent-color); margin-bottom: 10px; font-size: 14px;" onclick="switchScreen('screen-home')">← Orqaga</div>
             <div class="sub-title">⭐️ Telegram Stars</div>
         </div>
-        <input type="text" id="stars-target" class="target-input" placeholder="@username kiriting...">
+        
+        <div class="input-group">
+            <input type="text" id="stars-target" class="target-input" placeholder="@username kiriting...">
+            <button class="self-btn" onclick="setMyUsername('stars-target')">O'zimga</button>
+        </div>
         
         <div class="grid-container">
             <div class="item-card" onclick="openPayment('50 Stars', '11,000 so\'m')"><div class="item-name">50 ⭐️</div><div class="item-price">11,000 so'm</div></div>
@@ -270,10 +293,14 @@
             <div class="sub-title">Telegram Premium 💎</div>
             <div class="sub-desc">✅ Kerakli muddatni tanlang</div>
         </div>
-        <input type="text" id="premium-target" class="target-input" placeholder="@username kiriting...">
+        
+        <div class="input-group">
+            <input type="text" id="premium-target" class="target-input" placeholder="@username kiriting...">
+            <button class="self-btn" onclick="setMyUsername('premium-target')">O'zimga</button>
+        </div>
 
         <div class="grid-container">
-            <div class="item-card" onclick="openPayment('Telegram Premium (1 oy)', '49,900 so\'m')"><div class="item-name">1 oy (admin orqali)</div><div class="item-price">49,900 so'm</div></div>
+            <div class="item-card" onclick="openPayment('Telegram Premium (1 oy)', '49,900 so\'m')"><div class="item-name">1 oy</div><div class="item-price">49,900 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Premium (3 oy)', '180,000 so\'m')"><div class="item-name">3 oy</div><div class="item-price">180,000 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Premium (6 oy)', '250,000 so\'m')"><div class="item-name">6 oy</div><div class="item-price">250,000 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Premium (12 oy)', '400,000 so\'m')"><div class="item-name">12 oy</div><div class="item-price">400,000 so'm</div></div>
@@ -285,24 +312,18 @@
         <div class="sub-header">
             <div style="cursor: pointer; color: var(--accent-color); margin-bottom: 10px; font-size: 14px;" onclick="switchScreen('screen-home')">← Orqaga</div>
             <div class="sub-title">🎁 Telegram Gift</div>
-            <div class="sub-desc">👉 Sovg'ani tanlang (narx so'mda):</div>
+            <div class="sub-desc">👉 Sovg'ani tanlang:</div>
         </div>
         
+        <div class="input-group">
+            <input type="text" id="gift-target" class="target-input" placeholder="@username kiriting...">
+            <button class="self-btn" onclick="setMyUsername('gift-target')">O'zimga</button>
+        </div>
+
         <div class="grid-container">
             <div class="item-card" onclick="openPayment('Telegram Gift', '4,095 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">4,095 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '4,095 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">4,095 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '6,825 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">6,825 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Gift', '6,825 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">6,825 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '13,650 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">13,650 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '27,300 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">27,300 so'm</div></div>
-            <div class="item-card" onclick="openPayment('Telegram Gift', '27,300 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">27,300 so'm</div></div>
             <div class="item-card" onclick="openPayment('Telegram Gift', '27,300 so\'m')"><div class="item-name">🎁 Sovg'a</div><div class="item-price">27,300 so'm</div></div>
         </div>
     </div>
@@ -319,10 +340,10 @@
             <div class="modal-title">✅ Buyurtma qabul qilindi!</div>
             <div class="modal-text" id="modal-text">
                 <b>Mahsulot:</b> <span id="m-product"></span><br>
-                <b>Narxi:</b> <span id="m-price"></span><br><br>
+                <b>Narxi:</b> <span id="m-price"></span><br>
+                <b>Manzil:</b> <span id="m-target"></span><br><br>
                 💳 <b>Karta:</b><br><span class="card-number">9860160652729965</span><br>
-                👤 <b>Egasi:</b> Anvar Solexov<br><br>
-                ⚠️ Summani o'tkazib, chekni adminga yuboring!
+                👤 <b>Egasi:</b> Anvar Solexov
             </div>
             <button class="close-modal" onclick="closePayment()">Tushunarli</button>
         </div>
@@ -342,10 +363,22 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
+        let currentUserUsername = "";
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
             document.getElementById('user-name').innerText = user.first_name || "Anvar";
             document.getElementById('user-initial').innerText = (user.first_name ? user.first_name[0] : "A").toUpperCase();
+            if (user.username) {
+                currentUserUsername = '@' + user.username;
+            }
+        }
+
+        function setMyUsername(inputId) {
+            if (currentUserUsername) {
+                document.getElementById(inputId).value = currentUserUsername;
+            } else {
+                alert("Profilingizda username topilmadi!");
+            }
         }
 
         function switchScreen(screenId, btnElement) {
@@ -359,8 +392,20 @@
         }
 
         function openPayment(product, price) {
+            let activeScreen = document.querySelector('.screen.active').id;
+            let targetVal = "Ko'rsatilmagan";
+
+            if (activeScreen === 'screen-stars') {
+                targetVal = document.getElementById('stars-target').value || "O'zi uchun";
+            } else if (activeScreen === 'screen-premium') {
+                targetVal = document.getElementById('premium-target').value || "O'zi uchun";
+            } else if (activeScreen === 'screen-gifts') {
+                targetVal = document.getElementById('gift-target').value || "O'zi uchun";
+            }
+
             document.getElementById('m-product').innerText = product;
             document.getElementById('m-price').innerText = price;
+            document.getElementById('m-target').innerText = targetVal;
             document.getElementById('paymentModal').style.display = 'flex';
         }
 
