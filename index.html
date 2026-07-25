@@ -3,62 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Shop</title>
+    <title>Pro Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: var(--tg-theme-bg-color, #0f172a);
-            --text-color: var(--tg-theme-text-color, #f8fafc);
-            --card-bg: var(--tg-theme-secondary-bg-color, #1e293b);
-            --button-color: var(--tg-theme-button-color, #3b82f6);
-            --button-text: var(--tg-theme-button-text-color, #ffffff);
-            --accent: #f59e0b;
+            --tg-theme-bg-color: #1c1c1e;
+            --tg-theme-text-color: #ffffff;
+            --tg-theme-secondary-bg-color: #2c2c2e;
+            --tg-theme-button-color: #3478f7;
+            --tg-theme-button-text-color: #ffffff;
+            
+            /* Bizning ranglarimiz */
+            --stars-color: #ffcc00;
+            --premium-color: #bf5af2;
+            --gift-color: #ff375f;
         }
+
+        /* Agar Telegram o'zgaruvchilari bo'lsa, ularni ishlatamiz */
+        body.telegram-theme {
+            --bg-color: var(--tg-theme-bg-color);
+            --text-color: var(--tg-theme-text-color);
+            --card-bg: var(--tg-theme-secondary-bg-color);
+            --button-color: var(--tg-theme-button-color);
+            --button-text: var(--tg-theme-button-text-color);
+        }
+        
+        /* Standart rejim (agar brauzerda ochilsa) */
         body {
+            background-color: var(--bg-color, #1c1c1e);
+            color: var(--text-color, #ffffff);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
             padding: 16px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 10px 0 20px 0;
             font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--stars-color), var(--premium-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Asosiy menyu kategoriyalari */
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .cat-btn {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 2px solid transparent;
-            padding: 12px 8px;
+        /* Asosiy menyu tugmalari (Tablar) */
+        .tab-menu {
+            display: flex;
+            background-color: var(--card-bg, #2c2c2e);
             border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-color, #ffffff);
+            padding: 10px 0;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        .cat-btn.active {
-            border-color: var(--button-color);
-            background-color: rgba(59, 130, 246, 0.1);
+        .tab-btn.active {
+            background-color: var(--button-color, #3478f7);
+            color: var(--button-text, #ffffff);
         }
 
-        /* Mahsulotlar ro'yxati */
+        /* Mahsulotlar ro'yxati maydoni */
+        .tab-content {
+            flex: 1;
+            overflow-y: auto; /* Agar mahsulot ko'p bo'lsa aylantirish */
+            padding-right: 5px;
+        }
+
         .products-container {
             display: none;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             animation: fadeIn 0.3s ease;
         }
 
@@ -66,142 +101,207 @@
             display: flex;
         }
 
+        /* Chiroyli kartochka dizayni */
         .product-card {
-            background-color: var(--card-bg);
-            border-radius: 14px;
-            padding: 14px 16px;
+            background-color: var(--card-bg, #2c2c2e);
+            border-radius: 16px;
+            padding: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, border-color 0.3s ease;
+        }
+        
+        /* Har bir bo'limga alohida rangli belgi */
+        .product-card.star { border-left: 4px solid var(--stars-color); }
+        .product-card.premium { border-left: 4px solid var(--premium-color); }
+        .product-card.gift { border-left: 4px solid var(--gift-color); }
+
+        .product-card:active {
+            transform: scale(0.98); /* Bosganda kichrayish effekti */
         }
 
-        .product-info h3 {
+        .prod-info h3 {
             margin: 0 0 4px 0;
             font-size: 16px;
-        }
-
-        .product-info p {
-            margin: 0;
-            font-size: 13px;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .buy-btn {
-            background-color: var(--button-color);
-            color: var(--button-text);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
             font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: opacity 0.2s;
         }
 
-        .buy-btn:active {
+        .prod-info p {
+            margin: 0;
+            font-size: 12px;
             opacity: 0.7;
+        }
+
+        .prod-price {
+            text-align: right;
+        }
+
+        .price-val {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        /* Alohida rangli narxlar */
+        .products-container#stars .price-val { color: var(--stars-color); }
+        .products-container#premium .price-val { color: var(--premium-color); }
+        .products-container#gifts .price-val { color: var(--gift-color); }
+
+        .add-btn {
+            background-color: var(--button-color, #3478f7);
+            color: var(--button-text, #ffffff);
+            border: none;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Scrollbar dizayni */
+        .tab-content::-webkit-scrollbar { width: 4px; }
+        .tab-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
     </style>
 </head>
 <body>
 
-    <h2>⚡ Premium Do'kon</h2>
+    <h2>⚡ Premium Do'kon ⚡</h2>
 
-    <!-- Kategoriyalar tugmalari -->
-    <div class="categories">
-        <button class="cat-btn active" onclick="switchTab('stars', this)">⭐ Stars</button>
-        <button class="cat-btn" onclick="switchTab('premium', this)">💎 Premium</button>
-        <button class="cat-btn" onclick="switchTab('gifts', this)">🎁 Sovg'alar</button>
+    <!-- Yuqori menyu (Siz xohlagandek doimiy ekranda turadi) -->
+    <div class="tab-menu">
+        <button class="tab-btn active" onclick="openTab('stars', this)">
+            ⭐ Yulduzlar
+        </button>
+        <button class="tab-btn" onclick="openTab('premium', this)">
+            💎 Premium
+        </button>
+        <button class="tab-btn" onclick="openTab('gifts', this)">
+            🎁 Sovg'alar
+        </button>
     </div>
 
-    <!-- Telegram Stars bo'limi -->
-    <div id="stars" class="products-container active">
-        <div class="product-card">
-            <div class="product-info">
-                <h3>50 Stars</h3>
-                <p>15,000 UZS</p>
+    <div class="tab-content">
+        <!-- 1. Stars bo'limi (Sariq) -->
+        <div id="stars" class="products-container active">
+            <div class="product-card star">
+                <div class="prod-info">
+                    <h3>50 Yulduz</h3>
+                    <p>Telegram xizmatlari uchun</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">15,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('⭐ 50 Yulduz')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('50 Telegram Stars')">Sotib olish</button>
-        </div>
-        <div class="product-card">
-            <div class="product-info">
-                <h3>100 Stars</h3>
-                <p>28,000 UZS</p>
+            <div class="product-card star">
+                <div class="prod-info">
+                    <h3>100 Yulduz</h3>
+                    <p>Mashhur paket</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">28,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('⭐ 100 Yulduz')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('100 Telegram Stars')">Sotib olish</button>
-        </div>
-        <div class="product-card">
-            <div class="product-info">
-                <h3>500 Stars</h3>
-                <p>135,000 UZS</p>
+            <div class="product-card star">
+                <div class="prod-info">
+                    <h3>500 Yulduz</h3>
+                    <p>Eng foydali taklif</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">135,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('⭐ 500 Yulduz')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('500 Telegram Stars')">Sotib olish</button>
         </div>
-    </div>
 
-    <!-- Telegram Premium bo'limi -->
-    <div id="premium" class="products-container">
-        <div class="product-card">
-            <div class="product-info">
-                <h3>1 Oylik Premium</h3>
-                <p>25,000 UZS</p>
+        <!-- 2. Premium bo'limi (Binafsha) -->
+        <div id="premium" class="products-container">
+            <div class="product-card premium">
+                <div class="prod-info">
+                    <h3>Premium (1 oy)</h3>
+                    <p>To'liq imkoniyatlar</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">25,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('💎 Premium (1 oy)')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('1 Oylik Telegram Premium')">Sotib olish</button>
-        </div>
-        <div class="product-card">
-            <div class="product-info">
-                <h3>1 Yillik Premium</h3>
-                <p>210,000 UZS</p>
+            <div class="product-card premium">
+                <div class="prod-info">
+                    <h3>Premium (1 yil)</h3>
+                    <p>Eng yaxshi narx</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">210,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('💎 Premium (1 yil)')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('1 Yillik Telegram Premium')">Sotib olish</button>
         </div>
-    </div>
 
-    <!-- Sovg'alar (Gifts) bo'limi -->
-    <div id="gifts" class="products-container">
-        <div class="product-card">
-            <div class="product-info">
-                <h3>Maxsus Rojdestvo Tulki 🦊</h3>
-                <p>50,000 UZS</p>
+        <!-- 3. Sovg'alar bo'limi (Pushti) -->
+        <div id="gifts" class="products-container">
+            <div class="product-card gift">
+                <div class="prod-info">
+                    <h3>Rojdestvo Tulki</h3>
+                    <p>Profil uchun sovg'a</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">50,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('🎁 Rojdestvo Tulki')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('Sovg`a: Rojdestvo Tulki')">Sotib olish</button>
-        </div>
-        <div class="product-card">
-            <div class="product-info">
-                <h3>Oltin kubok 🏆</h3>
-                <p>90,000 UZS</p>
+             <div class="product-card gift">
+                <div class="prod-info">
+                    <h3>Oltin Kubok</h3>
+                    <p>Sovg'a sifatida</p>
+                </div>
+                <div class="prod-price">
+                    <span class="price-val">90,000 UZS</span>
+                    <button class="add-btn" onclick="sendProduct('🎁 Oltin Kubok')">Tanlash</button>
+                </div>
             </div>
-            <button class="buy-btn" onclick="buyItem('Sovg`a: Oltin kubok')">Sotib olish</button>
         </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Oynani to'liq ochish
+        tg.expand(); // Ilovani to'liq ekranga yoyish
 
-        function switchTab(tabId, btnElement) {
-            // Hamma bo'limlarni yashirish
-            document.querySelectorAll('.products-container').forEach(el => {
-                el.classList.remove('active');
-            });
-            // Hamma tugmalardan active klassini olish
-            document.querySelectorAll('.cat-btn').forEach(el => {
-                el.classList.remove('active');
-            });
-            // Tanlangan bo'lim va tugmani faollashtirish
-            document.getElementById(tabId).classList.add('active');
+        // Telegram mavzusiga moslashish (juda muhim detal!)
+        if (tg.colorScheme === 'dark') {
+            document.body.classList.add('telegram-theme');
+        }
+
+        // Bo'limlarni almashtirish funksiyasi
+        function openTab(tabName, btnElement) {
+            // Hamma kontentni yashirish
+            let contents = document.querySelectorAll('.products-container');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Hamma tugmalardan 'active' ni olib tashlash
+            let btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+
+            // Tanlanganini ko'rsatish
+            document.getElementById(tabName).classList.add('active');
             btnElement.classList.add('active');
         }
-        function buyItem(itemName) {
-            // Botga tanlangan mahsulot nomini yuborish va ilovani yopish
-            tg.sendData(itemName);
+
+        // Botga ma'lumot yuborish funksiyasi
+        function sendProduct(productName) {
+            tg.sendData(productName);
         }
     </script>
 </body>
