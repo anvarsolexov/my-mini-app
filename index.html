@@ -73,14 +73,13 @@
             display: none;
             flex-direction: column;
             gap: 10px;
-            animation: fadeIn 0.3s ease;
         }
 
         .products-container.active {
             display: flex;
         }
 
-        /* Setka (Grid) ko'rinishidagi mahsulotlar uchun (Stars va Gift uchun juda mos) */
+        /* Setka (Grid) ko'rinishidagi mahsulotlar */
         .grid-box {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -93,7 +92,6 @@
             padding: 14px 10px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -113,12 +111,10 @@
             font-weight: 700;
         }
 
-        /* Stars rang aksenti */
         #stars .grid-card p { color: var(--stars-color); }
-        /* Gift rang aksenti */
         #gifts .grid-card p { color: var(--gift-color); }
 
-        /* Premium uchun ro'yxat ko'rinishi */
+        /* Premium ro'yxat ko'rinishi */
         .list-card {
             background-color: var(--card-bg);
             border-radius: 14px;
@@ -128,7 +124,6 @@
             align-items: center;
             border-left: 4px solid var(--premium-color);
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
         .list-card:active {
@@ -152,20 +147,14 @@
             color: var(--premium-color);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .tab-content::-webkit-scrollbar { width: 4px; }
         .tab-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
     </style>
 </head>
 <body>
 
-    <h2>⚡ Premium Do'kon</h2>
+    <h2>⚡ Premium Do'kon v2</h2>
 
-    <!-- Yuqori menyu -->
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab('stars', this)">⭐ Stars</button>
         <button class="tab-btn" onclick="openTab('premium', this)">💎 Premium</button>
@@ -173,152 +162,62 @@
     </div>
 
     <div class="tab-content">
-        <!-- 1. STARS BO'LIMI (Rasm bo'yicha aniq narxlar) -->
+        <!-- 1. STARS BO'LIMI -->
         <div id="stars" class="products-container active">
             <div style="font-size: 12px; opacity: 0.7; margin-bottom: 4px; text-align: center;">⭐ 1 yulduz narxi: 220 so'm (Minimal 50 ta)</div>
             <div class="grid-box">
-                <div class="grid-card" onclick="sendProduct('⭐ 50 Stars')">
-                    <h3>50 ⭐</h3>
-                    <p>11,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 70 Stars')">
-                    <h3>70 ⭐</h3>
-                    <p>15,400 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 100 Stars')">
-                    <h3>100 ⭐</h3>
-                    <p>22,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 150 Stars')">
-                    <h3>150 ⭐</h3>
-                    <p>33,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 200 Stars')">
-                    <h3>200 ⭐</h3>
-                    <p>44,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 250 Stars')">
-                    <h3>250 ⭐</h3>
-                    <p>55,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 300 Stars')">
-                    <h3>300 ⭐</h3>
-                    <p>66,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 350 Stars')">
-                    <h3>350 ⭐</h3>
-                    <p>77,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 500 Stars')">
-                    <h3>500 ⭐</h3>
-                    <p>110,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 750 Stars')">
-                    <h3>750 ⭐</h3>
-                    <p>165,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 1000 Stars')">
-                    <h3>1000 ⭐</h3>
-                    <p>220,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 1500 Stars')">
-                    <h3>1500 ⭐</h3>
-                    <p>330,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 2500 Stars')">
-                    <h3>2500 ⭐</h3>
-                    <p>550,000 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('⭐ 5000 Stars')">
-                    <h3>5000 ⭐</h3>
-                    <p>1,100,000 so'm</p>
-                </div>
+                <div class="grid-card" onclick="sendProduct('⭐ 50 Stars')"><h3>50 ⭐</h3><p>11,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 70 Stars')"><h3>70 ⭐</h3><p>15,400 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 100 Stars')"><h3>100 ⭐</h3><p>22,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 150 Stars')"><h3>150 ⭐</h3><p>33,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 200 Stars')"><h3>200 ⭐</h3><p>44,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 250 Stars')"><h3>250 ⭐</h3><p>55,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 300 Stars')"><h3>300 ⭐</h3><p>66,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 350 Stars')"><h3>350 ⭐</h3><p>77,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 500 Stars')"><h3>500 ⭐</h3><p>110,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 750 Stars')"><h3>750 ⭐</h3><p>165,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 1000 Stars')"><h3>1000 ⭐</h3><p>220,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 1500 Stars')"><h3>1500 ⭐</h3><p>330,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 2500 Stars')"><h3>2500 ⭐</h3><p>550,000 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('⭐ 5000 Stars')"><h3>5000 ⭐</h3><p>1,100,000 so'm</p></div>
             </div>
         </div>
 
-        <!-- 2. PREMIUM BO'LIMI (Rasm bo'yicha aniq narxlar) -->
+        <!-- 2. PREMIUM BO'LIMI -->
         <div id="premium" class="products-container">
             <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 1 oy')">
-                <div class="list-info">
-                    <h3>1 oy (admin orqali)</h3>
-                    <p>Tezkor ulash</p>
-                </div>
+                <div class="list-info"><h3>1 oy (admin orqali)</h3><p>Tezkor ulash</p></div>
                 <div class="list-price">49,900 so'm</div>
             </div>
             <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 3 oy')">
-                <div class="list-info">
-                    <h3>3 oy</h3>
-                    <p>Chegirma asosida</p>
-                </div>
+                <div class="list-info"><h3>3 oy</h3><p>Chegirma asosida</p></div>
                 <div class="list-price">180,000 so'm</div>
             </div>
             <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 6 oy')">
-                <div class="list-info">
-                    <h3>6 oy</h3>
-                    <p>Hamyonbob</p>
-                </div>
+                <div class="list-info"><h3>6 oy</h3><p>Hamyonbob</p></div>
                 <div class="list-price">250,000 so'm</div>
             </div>
             <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 12 oy')">
-                <div class="list-info">
-                    <h3>12 oy</h3>
-                    <p>1 yillik obuna</p>
-                </div>
+                <div class="list-info"><h3>12 oy</h3><p>1 yillik obuna</p></div>
                 <div class="list-price">400,000 so'm</div>
             </div>
         </div>
 
-        <!-- 3. SOVG'ALAR BO'LIMI (Rasm bo'yicha aniq narxlar) -->
+        <!-- 3. SOVG'ALAR BO'LIMI -->
         <div id="gifts" class="products-container">
             <div class="grid-box">
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>4,095 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>4,095 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>6,825 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>6,825 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>13,650 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>27,300 so'm</p>
-                </div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')">
-                    <h3>🎁 Sovg'a</h3>
-                    <p>27,300 so'm</p>
-                </div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')"><h3>🎁 Sovg'a</h3><p>4,095 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')"><h3>🎁 Sovg'a</h3><p>4,095 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')"><h3>🎁 Sovg'a</h3><p>6,825 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')"><h3>🎁 Sovg'a</h3><p>6,825 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')"><h3>🎁 Sovg'a</h3><p>27,300 so'm</p></div>
+                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')"><h3>🎁 Sovg'a</h3><p>27,300 so'm</p></div>
             </div>
         </div>
     </div>
