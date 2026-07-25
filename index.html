@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Shop</title>
+    <title>ArzonStarsBot Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: var(--tg-theme-bg-color, #1c1c1e);
+            --bg-color: var(--tg-theme-bg-color, #121212);
             --text-color: var(--tg-theme-text-color, #ffffff);
-            --card-bg: var(--tg-theme-secondary-bg-color, #2c2c2e);
-            --button-color: var(--tg-theme-button-color, #3478f7);
+            --card-bg: var(--tg-theme-secondary-bg-color, #1e1e20);
+            --button-color: var(--tg-theme-button-color, #2481cc);
             --button-text: var(--tg-theme-button-text-color, #ffffff);
-            --stars-color: #ffcc00;
-            --premium-color: #bf5af2;
-            --gift-color: #ff375f;
+            --accent-blue: #007aff;
+            --badge-green: #28c76f;
         }
 
         body {
@@ -22,216 +21,444 @@
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            padding: 16px 16px 80px 16px; /* Pastdagi menyu yopib qo'ymasligi uchun padding */
             box-sizing: border-box;
         }
 
-        h2 {
-            text-align: center;
-            margin: 5px 0 15px 0;
-            font-size: 20px;
-        }
-
-        /* Yuqori menyu (Tablar) */
-        .tab-menu {
+        /* Yuqori qism (Header) */
+        .header-top {
             display: flex;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 15px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        .tab-btn {
-            flex: 1;
+        .user-badge {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            background-color: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .top-btn {
+            background-color: var(--badge-green);
+            color: white;
             border: none;
-            background: transparent;
-            color: var(--text-color);
-            padding: 10px 0;
-            border-radius: 10px;
+            border-radius: 20px;
+            padding: 8px 16px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .tab-btn.active {
-            background-color: var(--button-color);
-            color: var(--button-text);
-        }
-
-        /* Kontent maydoni */
-        .tab-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .products-container {
+        /* Sahifalar */
+        .page {
             display: none;
-            flex-direction: column;
-            gap: 10px;
+            animation: fadeIn 0.25s ease;
         }
 
-        .products-container.active {
-            display: flex;
+        .page.active {
+            display: block;
         }
 
-        /* Setka (Grid) ko'rinishidagi mahsulotlar */
-        .grid-box {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .grid-card {
-            background-color: var(--card-bg);
-            border-radius: 14px;
-            padding: 14px 10px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .grid-card:active {
-            transform: scale(0.96);
-            background-color: rgba(255,255,255,0.08);
-        }
-
-        .grid-card h3 {
+        h2 {
+            font-size: 20px;
             margin: 0 0 6px 0;
-            font-size: 15px;
         }
 
-        .grid-card p {
+        .subtitle {
+            font-size: 13px;
+            opacity: 0.6;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        /* Asosiy menyu karta dizayni (1-rasm) */
+        .menu-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        .menu-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .menu-info {
+            flex: 1;
+        }
+
+        .menu-info h3 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+        }
+
+        .menu-info p {
             margin: 0;
             font-size: 13px;
-            font-weight: 700;
+            opacity: 0.6;
         }
 
-        #stars .grid-card p { color: var(--stars-color); }
-        #gifts .grid-card p { color: var(--gift-color); }
+        .arrow {
+            opacity: 0.4;
+            font-size: 16px;
+        }
 
-        /* Premium ro'yxat ko'rinishi */
-        .list-card {
+        /* "Kimga?" va Username qidirish qismi */
+        .recipient-box {
+            margin-bottom: 16px;
+        }
+
+        .recipient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .self-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 4px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-color);
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            opacity: 0.4;
+        }
+
+        /* Mahsulot kartochkalari ro'yxati */
+        .item-card {
             background-color: var(--card-bg);
             border-radius: 14px;
             padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid var(--premium-color);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .item-card:active {
+            background-color: rgba(255,255,255,0.06);
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .discount-badge {
+            background-color: #28c76f;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 8px;
+        }
+
+        /* Orqaga qaytish tugmasi */
+        .back-link {
+            display: inline-block;
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 14px;
             cursor: pointer;
         }
 
-        .list-card:active {
-            transform: scale(0.98);
+        /* Pastki qatnov menyusi (Bottom Navigation Bar) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 12px;
+            left: 16px;
+            right: 16px;
+            background-color: rgba(30, 30, 32, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .list-info h3 {
-            margin: 0 0 4px 0;
-            font-size: 15px;
+        .nav-item {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            opacity: 0.5;
+            font-size: 20px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
         }
 
-        .list-info p {
-            margin: 0;
-            font-size: 12px;
-            opacity: 0.7;
+        .nav-item.active {
+            opacity: 1;
+            background-color: rgba(255,255,255,0.1);
         }
 
-        .list-price {
+        .nav-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
             font-size: 14px;
-            font-weight: 800;
-            color: var(--premium-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .tab-content::-webkit-scrollbar { width: 4px; }
-        .tab-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <h2>⚡ Premium Do'kon v2</h2>
-
-    <div class="tab-menu">
-        <button class="tab-btn active" onclick="openTab('stars', this)">⭐ Stars</button>
-        <button class="tab-btn" onclick="openTab('premium', this)">💎 Premium</button>
-        <button class="tab-btn" onclick="openTab('gifts', this)">🎁 Sovg'alar</button>
+    <!-- Yuqori qism -->
+    <div class="header-top">
+        <div class="user-badge">
+            <div class="user-avatar" id="userInitial">A</div>
+            <span id="userName">Anvar</span>
+        </div>
+        <button class="top-btn" onclick="alert('Hisobni to‘ldirish tez orada ishga tushadi')">Hisobni to'ldirish</button>
     </div>
 
-    <div class="tab-content">
-        <!-- 1. STARS BO'LIMI -->
-        <div id="stars" class="products-container active">
-            <div style="font-size: 12px; opacity: 0.7; margin-bottom: 4px; text-align: center;">⭐ 1 yulduz narxi: 220 so'm (Minimal 50 ta)</div>
-            <div class="grid-box">
-                <div class="grid-card" onclick="sendProduct('⭐ 50 Stars')"><h3>50 ⭐</h3><p>11,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 70 Stars')"><h3>70 ⭐</h3><p>15,400 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 100 Stars')"><h3>100 ⭐</h3><p>22,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 150 Stars')"><h3>150 ⭐</h3><p>33,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 200 Stars')"><h3>200 ⭐</h3><p>44,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 250 Stars')"><h3>250 ⭐</h3><p>55,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 300 Stars')"><h3>300 ⭐</h3><p>66,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 350 Stars')"><h3>350 ⭐</h3><p>77,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 500 Stars')"><h3>500 ⭐</h3><p>110,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 750 Stars')"><h3>750 ⭐</h3><p>165,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 1000 Stars')"><h3>1000 ⭐</h3><p>220,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 1500 Stars')"><h3>1500 ⭐</h3><p>330,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 2500 Stars')"><h3>2500 ⭐</h3><p>550,000 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('⭐ 5000 Stars')"><h3>5000 ⭐</h3><p>1,100,000 so'm</p></div>
+    <!-- 1. ASOSIY SAHIFA (Home) -->
+    <div id="page-home" class="page active">
+        <div class="menu-card" onclick="switchPage('page-stars')">
+            <div class="menu-icon" style="background: rgba(255, 204, 0, 0.1);">⭐</div>
+            <div class="menu-info">
+                <h3>Telegram Stars</h3>
+                <p>Hamyonbop va tezkor</p>
             </div>
+            <div class="arrow">›</div>
         </div>
 
-        <!-- 2. PREMIUM BO'LIMI -->
-        <div id="premium" class="products-container">
-            <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 1 oy')">
-                <div class="list-info"><h3>1 oy (admin orqali)</h3><p>Tezkor ulash</p></div>
-                <div class="list-price">49,900 so'm</div>
+        <div class="menu-card" onclick="switchPage('page-premium')">
+            <div class="menu-icon" style="background: rgba(0, 122, 255, 0.1);">💎</div>
+            <div class="menu-info">
+                <h3>Telegram Premium</h3>
+                <p>Hamyonbop va arzon</p>
             </div>
-            <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 3 oy')">
-                <div class="list-info"><h3>3 oy</h3><p>Chegirma asosida</p></div>
-                <div class="list-price">180,000 so'm</div>
-            </div>
-            <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 6 oy')">
-                <div class="list-info"><h3>6 oy</h3><p>Hamyonbob</p></div>
-                <div class="list-price">250,000 so'm</div>
-            </div>
-            <div class="list-card" onclick="sendProduct('💎 Telegram Premium: 12 oy')">
-                <div class="list-info"><h3>12 oy</h3><p>1 yillik obuna</p></div>
-                <div class="list-price">400,000 so'm</div>
-            </div>
+            <div class="arrow">›</div>
         </div>
 
-        <!-- 3. SOVG'ALAR BO'LIMI -->
-        <div id="gifts" class="products-container">
-            <div class="grid-box">
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')"><h3>🎁 Sovg'a</h3><p>4,095 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 4,095 so`mlik')"><h3>🎁 Sovg'a</h3><p>4,095 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')"><h3>🎁 Sovg'a</h3><p>6,825 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 6,825 so`mlik')"><h3>🎁 Sovg'a</h3><p>6,825 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 13,650 so`mlik')"><h3>🎁 Sovg'a</h3><p>13,650 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')"><h3>🎁 Sovg'a</h3><p>27,300 so'm</p></div>
-                <div class="grid-card" onclick="sendProduct('🎁 Telegram Gift: 27,300 so`mlik')"><h3>🎁 Sovg'a</h3><p>27,300 so'm</p></div>
+        <div class="menu-card" onclick="switchPage('page-gifts')">
+            <div class="menu-icon" style="background: rgba(255, 55, 95, 0.1);">🎁</div>
+            <div class="menu-info">
+                <h3>Telegram Gifts</h3>
+                <p>Chiroyli sovg'alar</p>
             </div>
+            <div class="arrow">›</div>
+        </div>
+
+        <div style="margin-top: 24px; font-size: 13px; font-weight: 600; opacity: 0.6; margin-bottom: 10px;">OXIRGI BUYURTMALAR</div>
+        <div style="text-align: center; padding: 30px; opacity: 0.4; font-size: 13px; background: var(--card-bg); border-radius: 16px;">
+            Buyurtmalar yo'q
         </div>
     </div>
+
+    <!-- 2. STARS SAHifasi -->
+    <div id="page-stars" class="page">
+        <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
+        <h2>Telegram Stars</h2>
+        <div class="subtitle">O'zingiz yoki yaqinlaringiz uchun Stars balansini to'ldiring — qulay to'lov usullari bilan.</div>
+        
+        <div class="recipient-box">
+            <div class="recipient-header">
+                <span>Kimga?</span>
+                <button class="self-btn" onclick="document.getElementById('stars-input').value='O\'zimga'">O'zimga</button>
+            </div>
+            <input type="text" id="stars-input" class="search-input" placeholder="@username kiriting...">
+        </div>
+
+        <div style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">To'plamni tanlang</div>
+
+        <div class="item-card" onclick="sendProduct('⭐ 50 Stars')"><span class="item-title">⭐ 50 Stars</span><span class="item-price">11,200 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 69 Stars')"><span class="item-title">⭐ 69 Stars</span><span class="item-price">15,456 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 100 Stars')"><span class="item-title">⭐ 100 Stars</span><span class="item-price">22,400 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 150 Stars')"><span class="item-title">⭐ 150 Stars</span><span class="item-price">33,600 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 250 Stars')"><span class="item-title">⭐ 250 Stars</span><span class="item-price">56,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 350 Stars')"><span class="item-title">⭐ 350 Stars</span><span class="item-price">78,400 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 500 Stars')"><span class="item-title">⭐ 500 Stars</span><span class="item-price">112,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 750 Stars')"><span class="item-title">⭐ 750 Stars</span><span class="item-price">168,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 1K Stars')"><span class="item-title">⭐ 1K Stars</span><span class="item-price">224,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 2K Stars')"><span class="item-title">⭐ 2K Stars</span><span class="item-price">336,000 so'm</span></div>
+    </div>
+
+    <!-- 3. PREMIUM SAHIFA -->
+    <div id="page-premium" class="page">
+        <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
+        <h2>Telegram Premium olish 💎</h2>
+        <div class="subtitle">O'zingiz yoki yaqinlaringiz uchun Premium — qulay to'lov usullari bilan.</div>
+
+        <div class="recipient-box">
+            <div class="recipient-header">
+                <span>Kimga?</span>
+                <button class="self-btn" onclick="document.getElementById('prem-input').value='O\'zimga'">O'zimga</button>
+            </div>
+            <input type="text" id="prem-input" class="search-input" placeholder="@username kiriting...">
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 14px; font-weight: 600;">Muddatni tanlang</span>
+            <span class="discount-badge">-42%</span>
+        </div>
+
+        <div class="item-card" onclick="sendProduct('💎 1 oy Premium')">
+            <span class="item-title">1 oy <span style="font-size:11px; opacity:0.5; font-weight:normal; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px;">Admin orqali</span></span>
+            <span class="item-price">52,000 so'm</span>
+        </div>
+        <div class="item-card" onclick="sendProduct('💎 3 oy Premium')">
+            <span class="item-title">3 oy <span class="discount-badge">-20%</span></span>
+            <span class="item-price">190,000 so'm</span>
+        </div>
+        <div class="item-card" onclick="sendProduct('💎 6 oy Premium')">
+            <span class="item-title">6 oy <span class="discount-badge">-37%</span></span>
+            <span class="item-price">250,000 so'm</span>
+        </div>
+        <div class="item-card" onclick="sendProduct('💎 1 yil Premium')">
+            <span class="item-title">1 yil <span class="discount-badge">-42%</span></span>
+            <span class="item-price">420,000 so'm</span>
+        </div>
+    </div>
+
+    <!-- 4. GIFTS SAHIFA -->
+    <div id="page-gifts" class="page">
+        <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
+        <h2>Telegram Gift</h2>
+        <div class="subtitle">👇 Sovg'ani tanlang (narx so'mda):</div>
+
+        <div class="item-card" onclick="sendProduct('🎁 Gift 4,095 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">4,095 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 6,825 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">6,825 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 13,650 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">13,650 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 27,300 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">27,300 so'm</span></div>
+    </div>
+
+    <!-- 5. TARIX (HISTORY) SAHIFA -->
+    <div id="page-history" class="page">
+        <h2>Buyurtmalar tarixi</h2>
+        <div style="display: flex; gap: 6px; overflow-x: auto; margin: 14px 0; padding-bottom: 4px;">
+            <button class="self-btn" style="background:var(--accent-blue)">Hammasi</button>
+            <button class="self-btn" style="background:var(--card-bg); color:var(--text-color)">⭐ Stars</button>
+            <button class="self-btn" style="background:var(--card-bg); color:var(--text-color)">💎 Premium</button>
+            <button class="self-btn" style="background:var(--card-bg); color:var(--text-color)">🎁 Gift</button>
+        </div>
+        <div style="background: var(--card-bg); border-radius: 16px; padding: 40px 20px; text-align: center; margin-top: 20px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
+            <div style="opacity: 0.5; font-size: 14px;">Buyurtmalar topilmadi</div>
+        </div>
+    </div>
+
+    <!-- Pastki Navigatsiya Menyusi -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" id="nav-home" onclick="switchPage('page-home')">⭐</button>
+        <button class="nav-item" id="nav-history" onclick="switchPage('page-history')">🕒</button>
+        <div class="nav-avatar">A</div>
+    </nav>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function openTab(tabName, btnElement) {
-            document.querySelectorAll('.products-container').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        // Foydalanuvchi nomini Telegram'dan olish (agar mavjud bo'lsa)
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            let firstName = tg.initDataUnsafe.user.first_name;
+            document.getElementById('userName').innerText = firstName;
+            document.getElementById('userInitial').innerText = firstName.charAt(0).toUpperCase();
+            document.querySelector('.nav-avatar').innerText = firstName.charAt(0).toUpperCase();
+        }
+
+        function switchPage(pageId) {
+            // Hamma sahifalarni yashirish
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Tanlangan sahifani ochish
+            document.getElementById(pageId).classList.add('active');
+
+            // Navigatsiya tugmalarini boshqarish
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            if (pageId === 'page-home' || pageId.startsWith('page-')) {
+                // Agar asosiy bo'limlar bo'lsa
+                if(document.getElementById('nav-home')) {
+                    document.getElementById('nav-home').classList.add('active');
+                }
+            }
+            if (pageId === 'page-history') {
+                document.getElementById('nav-history').classList.add('active');
+            }
             
-            document.getElementById(tabName).classList.add('active');
-            btnElement.classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         function sendProduct(productName) {
