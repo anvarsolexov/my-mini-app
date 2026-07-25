@@ -21,11 +21,10 @@
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 16px 16px 80px 16px; /* Pastdagi menyu yopib qo'ymasligi uchun padding */
+            padding: 16px 16px 80px 16px;
             box-sizing: border-box;
         }
 
-        /* Yuqori qism (Header) */
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -67,7 +66,6 @@
             cursor: pointer;
         }
 
-        /* Sahifalar */
         .page {
             display: none;
             animation: fadeIn 0.25s ease;
@@ -89,7 +87,6 @@
             line-height: 1.4;
         }
 
-        /* Asosiy menyu karta dizayni (1-rasm) */
         .menu-card {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -137,7 +134,6 @@
             font-size: 16px;
         }
 
-        /* "Kimga?" va Username qidirish qismi */
         .recipient-box {
             margin-bottom: 16px;
         }
@@ -177,7 +173,6 @@
             opacity: 0.4;
         }
 
-        /* Mahsulot kartochkalari ro'yxati */
         .item-card {
             background-color: var(--card-bg);
             border-radius: 14px;
@@ -216,7 +211,6 @@
             margin-left: 8px;
         }
 
-        /* Orqaga qaytish tugmasi */
         .back-link {
             display: inline-block;
             color: var(--accent-blue);
@@ -227,7 +221,6 @@
             cursor: pointer;
         }
 
-        /* Pastki qatnov menyusi (Bottom Navigation Bar) */
         .bottom-nav {
             position: fixed;
             bottom: 12px;
@@ -285,7 +278,6 @@
 </head>
 <body>
 
-    <!-- Yuqori qism -->
     <div class="header-top">
         <div class="user-badge">
             <div class="user-avatar" id="userInitial">A</div>
@@ -294,7 +286,7 @@
         <button class="top-btn" onclick="alert('Hisobni to‘ldirish tez orada ishga tushadi')">Hisobni to'ldirish</button>
     </div>
 
-    <!-- 1. ASOSIY SAHIFA (Home) -->
+    <!-- ASOSIY SAHIFA -->
     <div id="page-home" class="page active">
         <div class="menu-card" onclick="switchPage('page-stars')">
             <div class="menu-icon" style="background: rgba(255, 204, 0, 0.1);">⭐</div>
@@ -329,7 +321,7 @@
         </div>
     </div>
 
-    <!-- 2. STARS SAHifasi -->
+    <!-- STARS SAHifasi -->
     <div id="page-stars" class="page">
         <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
         <h2>Telegram Stars</h2>
@@ -338,26 +330,26 @@
         <div class="recipient-box">
             <div class="recipient-header">
                 <span>Kimga?</span>
-                <button class="self-btn" onclick="document.getElementById('stars-input').value='O\'zimga'">O'zimga</button>
+                <button class="self-btn" onclick="setMyUsername('stars-input')">O'zimga</button>
             </div>
             <input type="text" id="stars-input" class="search-input" placeholder="@username kiriting...">
         </div>
 
         <div style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">To'plamni tanlang</div>
 
-        <div class="item-card" onclick="sendProduct('⭐ 50 Stars')"><span class="item-title">⭐ 50 Stars</span><span class="item-price">11,200 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 69 Stars')"><span class="item-title">⭐ 69 Stars</span><span class="item-price">15,456 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 100 Stars')"><span class="item-title">⭐ 100 Stars</span><span class="item-price">22,400 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 150 Stars')"><span class="item-title">⭐ 150 Stars</span><span class="item-price">33,600 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 250 Stars')"><span class="item-title">⭐ 250 Stars</span><span class="item-price">56,000 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 350 Stars')"><span class="item-title">⭐ 350 Stars</span><span class="item-price">78,400 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 500 Stars')"><span class="item-title">⭐ 500 Stars</span><span class="item-price">112,000 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 750 Stars')"><span class="item-title">⭐ 750 Stars</span><span class="item-price">168,000 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 1K Stars')"><span class="item-title">⭐ 1K Stars</span><span class="item-price">224,000 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('⭐ 2K Stars')"><span class="item-title">⭐ 2K Stars</span><span class="item-price">336,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 50 Stars', 'stars-input')"><span class="item-title">⭐ 50 Stars</span><span class="item-price">11,200 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 69 Stars', 'stars-input')"><span class="item-title">⭐ 69 Stars</span><span class="item-price">15,456 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 100 Stars', 'stars-input')"><span class="item-title">⭐ 100 Stars</span><span class="item-price">22,400 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 150 Stars', 'stars-input')"><span class="item-title">⭐ 150 Stars</span><span class="item-price">33,600 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 250 Stars', 'stars-input')"><span class="item-title">⭐ 250 Stars</span><span class="item-price">56,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 350 Stars', 'stars-input')"><span class="item-title">⭐ 350 Stars</span><span class="item-price">78,400 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 500 Stars', 'stars-input')"><span class="item-title">⭐ 500 Stars</span><span class="item-price">112,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 750 Stars', 'stars-input')"><span class="item-title">⭐ 750 Stars</span><span class="item-price">168,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 1K Stars', 'stars-input')"><span class="item-title">⭐ 1K Stars</span><span class="item-price">224,000 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('⭐ 2K Stars', 'stars-input')"><span class="item-title">⭐ 2K Stars</span><span class="item-price">336,000 so'm</span></div>
     </div>
 
-    <!-- 3. PREMIUM SAHIFA -->
+    <!-- PREMIUM SAHIFA -->
     <div id="page-premium" class="page">
         <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
         <h2>Telegram Premium olish 💎</h2>
@@ -366,7 +358,7 @@
         <div class="recipient-box">
             <div class="recipient-header">
                 <span>Kimga?</span>
-                <button class="self-btn" onclick="document.getElementById('prem-input').value='O\'zimga'">O'zimga</button>
+                <button class="self-btn" onclick="setMyUsername('prem-input')">O'zimga</button>
             </div>
             <input type="text" id="prem-input" class="search-input" placeholder="@username kiriting...">
         </div>
@@ -376,37 +368,45 @@
             <span class="discount-badge">-42%</span>
         </div>
 
-        <div class="item-card" onclick="sendProduct('💎 1 oy Premium')">
+        <div class="item-card" onclick="sendProduct('💎 1 oy Premium', 'prem-input')">
             <span class="item-title">1 oy <span style="font-size:11px; opacity:0.5; font-weight:normal; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px;">Admin orqali</span></span>
             <span class="item-price">52,000 so'm</span>
         </div>
-        <div class="item-card" onclick="sendProduct('💎 3 oy Premium')">
+        <div class="item-card" onclick="sendProduct('💎 3 oy Premium', 'prem-input')">
             <span class="item-title">3 oy <span class="discount-badge">-20%</span></span>
             <span class="item-price">190,000 so'm</span>
         </div>
-        <div class="item-card" onclick="sendProduct('💎 6 oy Premium')">
+        <div class="item-card" onclick="sendProduct('💎 6 oy Premium', 'prem-input')">
             <span class="item-title">6 oy <span class="discount-badge">-37%</span></span>
             <span class="item-price">250,000 so'm</span>
         </div>
-        <div class="item-card" onclick="sendProduct('💎 1 yil Premium')">
+        <div class="item-card" onclick="sendProduct('💎 1 yil Premium', 'prem-input')">
             <span class="item-title">1 yil <span class="discount-badge">-42%</span></span>
             <span class="item-price">420,000 so'm</span>
         </div>
     </div>
 
-    <!-- 4. GIFTS SAHIFA -->
+    <!-- GIFTS SAHIFA -->
     <div id="page-gifts" class="page">
         <a class="back-link" onclick="switchPage('page-home')">‹ Orqaga</a>
         <h2>Telegram Gift</h2>
         <div class="subtitle">👇 Sovg'ani tanlang (narx so'mda):</div>
 
-        <div class="item-card" onclick="sendProduct('🎁 Gift 4,095 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">4,095 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('🎁 Gift 6,825 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">6,825 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('🎁 Gift 13,650 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">13,650 so'm</span></div>
-        <div class="item-card" onclick="sendProduct('🎁 Gift 27,300 so`m')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">27,300 so'm</span></div>
+        <div class="recipient-box">
+            <div class="recipient-header">
+                <span>Kimga?</span>
+                <button class="self-btn" onclick="setMyUsername('gift-input')">O'zimga</button>
+            </div>
+            <input type="text" id="gift-input" class="search-input" placeholder="@username kiriting...">
+        </div>
+
+        <div class="item-card" onclick="sendProduct('🎁 Gift 4,095 so`m', 'gift-input')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">4,095 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 6,825 so`m', 'gift-input')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">6,825 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 13,650 so`m', 'gift-input')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">13,650 so'm</span></div>
+        <div class="item-card" onclick="sendProduct('🎁 Gift 27,300 so`m', 'gift-input')"><span class="item-title">🎁 Sovg'a</span><span class="item-price">27,300 so'm</span></div>
     </div>
 
-    <!-- 5. TARIX (HISTORY) SAHIFA -->
+    <!-- TARIX SAHIFA -->
     <div id="page-history" class="page">
         <h2>Buyurtmalar tarixi</h2>
         <div style="display: flex; gap: 6px; overflow-x: auto; margin: 14px 0; padding-bottom: 4px;">
@@ -421,7 +421,7 @@
         </div>
     </div>
 
-    <!-- Pastki Navigatsiya Menyusi -->
+    <!-- Pastki Navigatsiya -->
     <nav class="bottom-nav">
         <button class="nav-item active" id="nav-home" onclick="switchPage('page-home')">⭐</button>
         <button class="nav-item" id="nav-history" onclick="switchPage('page-history')">🕒</button>
@@ -432,24 +432,41 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Foydalanuvchi nomini Telegram'dan olish (agar mavjud bo'lsa)
+        let myUsername = "";
+
+        // Telegram'dan foydalanuvchi ma'lumotlarini olish
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            let firstName = tg.initDataUnsafe.user.first_name;
+            let user = tg.initDataUnsafe.user;
+            let firstName = user.first_name || "Foydalanuvchi";
+            
             document.getElementById('userName').innerText = firstName;
             document.getElementById('userInitial').innerText = firstName.charAt(0).toUpperCase();
             document.querySelector('.nav-avatar').innerText = firstName.charAt(0).toUpperCase();
+
+            // Agar username mavjud bo'lsa @ bilan olamiz, bo'lmasa ID raqamini yoki ismini yozamiz
+            if (user.username) {
+                myUsername = "@" + user.username;
+            } else {
+                myUsername = firstName;
+            }
+        }
+
+        // "O'zimga" tugmasi bosilganda ishlaydigan funksiya
+        function setMyUsername(inputId) {
+            let inputField = document.getElementById(inputId);
+            if (myUsername) {
+                inputField.value = myUsername;
+            } else {
+                inputField.value = "Username topilmadi";
+            }
         }
 
         function switchPage(pageId) {
-            // Hamma sahifalarni yashirish
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Tanlangan sahifani ochish
             document.getElementById(pageId).classList.add('active');
 
-            // Navigatsiya tugmalarini boshqarish
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             if (pageId === 'page-home' || pageId.startsWith('page-')) {
-                // Agar asosiy bo'limlar bo'lsa
                 if(document.getElementById('nav-home')) {
                     document.getElementById('nav-home').classList.add('active');
                 }
@@ -457,12 +474,21 @@
             if (pageId === 'page-history') {
                 document.getElementById('nav-history').classList.add('active');
             }
-            
             window.scrollTo(0, 0);
         }
 
-        function sendProduct(productName) {
-            tg.sendData(productName);
+        // Mahsulot tanlanganda kiritilgan username bilan birga botga yuborish
+        function sendProduct(productName, inputId) {
+            let recipient = document.getElementById(inputId).value.trim();
+            
+            if (!recipient) {
+                alert("Iltimos, kimga yuborilishini yozing yoki 'O'zimga' tugmasini bosing!");
+                document.getElementById(inputId).focus();
+                return;
+            }
+
+            let fullData = `${productName} | Kimga: ${recipient}`;
+            tg.sendData(fullData);
         }
     </script>
 </body>
